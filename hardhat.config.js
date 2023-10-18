@@ -1,6 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("@nomicfoundation/hardhat-verify");
+require("./tasks/blockNumber");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const surl = process.env.RPC_URL_ALCHEMY;
