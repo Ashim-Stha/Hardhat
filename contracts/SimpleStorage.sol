@@ -1,55 +1,34 @@
-//SPDX-License-Identifier:MIT
+// I'm a comment!
+// SPDX-License-Identifier: MIT
+
 pragma solidity 0.8.8;
 
+// pragma solidity ^0.8.0;
+// pragma solidity >=0.8.0 <0.9.0;
+
 contract SimpleStorage {
-    uint256 public favoriteNum;
-
-    function store(uint256 _favNum) public virtual {
-        favoriteNum = _favNum;
-
-        // uint256 scopeTest; //available only to this function
-
-        //retrieve() however if we call retrieve() it will cost gas
-    }
-
-    // function store1(uint256 _scopeTest) public{
-    //      scopeTest=_scopeTest; //scopeTest not available outside store function
-    // }
-
-    //view,pure dont use gas
-    function retrieve() public view returns (uint256) {
-        return favoriteNum;
-    }
-
-    //pure even dont allow to read data
-    function add() public pure returns (uint256) {
-        return (2 + 100);
-    }
-
-    //    People public person=People({roll:7,name:"Ashim"});
+    uint256 favoriteNumber;
 
     struct People {
-        uint256 roll;
+        uint256 favoriteNumber;
         string name;
     }
 
-    //we use dynamic array
+    // uint256[] public anArray;
     People[] public people;
 
-    function addPerson(uint256 _roll, string memory _name) public {
-        people.push(People(_roll, _name));
-        //_name='asdsd' //since memory can be modified
+    mapping(string => uint256) public nameToFavoriteNumber;
 
-        nameToRoll[_name] = _roll;
+    function store(uint256 _favoriteNumber) public {
+        favoriteNumber = _favoriteNumber;
     }
 
-    //data location like memory or calldata can be specified only in array,string,struct or mappings where you dont know where to store
+    function retrieve() public view returns (uint256) {
+        return favoriteNumber;
+    }
 
-    //memory stores variable temporarily and can be modified
-    //calldata stores variable temporarily and cant be modified
-    //storage stores variable permanently can be modified
-
-    //**However whatif we know name but not rollno
-    //Mappings
-    mapping(string => uint256) public nameToRoll;
+    function addPerson(string memory _name, uint256 _favoriteNumber) public {
+        people.push(People(_favoriteNumber, _name));
+        nameToFavoriteNumber[_name] = _favoriteNumber;
+    }
 }

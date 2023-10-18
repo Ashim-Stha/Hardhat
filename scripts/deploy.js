@@ -5,19 +5,28 @@ const { ethers, run, network } = require("hardhat");
 require("dotenv").config();
 
 async function main() {
-  const contractFactory = await ethers.getContractFactory("SimpleStorage");
+  const SimpleStorageFactory = await ethers.getContractFactory("SimpleStorage");
 
   console.log("Deploying...");
-  const contract = await contractFactory.deploy();
-  const address = await contract.getAddress();
-
-  console.log(address);
+  const simpleStorage = await SimpleStorageFactory.deploy();
+  await simpleStorage.waitForDeployment();
+  const addr = await simpleStorage.getAddress();
+  console.log(addr);
   // console.log(network.config);
 
   if (network.config.chainId === 11155111 && process.env.ETHERSCAN_API_KEY) {
-    await contract.getAddress();
-    await verify(address, []);
+    await simpleStorage.deploymentTransaction().wait(6);
+    await verify(addr, []);
   }
+
+  const currentFavNum = await simpleStorage.retrieve();
+  console.log(currentFavNum.toString());
+
+  const transactionResponse = await simpleStorage.store(7);
+  await transactionResponse.wait(1);
+
+  const updatedNum = await simpleStorage.retrieve();
+  console.log(updatedNum.toString());
 
   async function verify(contractAddress, args) {
     //args is present only if constuctor is present in contract
