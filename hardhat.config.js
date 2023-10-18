@@ -2,11 +2,13 @@ require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 require("@nomicfoundation/hardhat-verify");
 require("./tasks/blockNumber");
+require("hardhat-gas-reporter");
 
 /** @type import('hardhat/config').HardhatUserConfig */
-const surl = process.env.RPC_URL_ALCHEMY;
-const pkey = process.env.PRIVATE_KEY;
-const api = process.env.ETHERSCAN_API_KEY;
+const surl = process.env.RPC_URL_ALCHEMY || "https://eth-sepolia";
+const pkey = process.env.PRIVATE_KEY || "0xkey";
+const api = process.env.ETHERSCAN_API_KEY || "key";
+const COINMARKETCAP_API = process.env.COINMARKETCAP_API || "key";
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -25,5 +27,15 @@ module.exports = {
   solidity: "0.8.8",
   etherscan: {
     apiKey: api,
+  },
+  gasReporter: {
+    enabled: true,
+    noColors: true,
+    outputFile: "gas-report.txt",
+    currency: "USD",
+    coinmarketcap: COINMARKETCAP_API,
+
+    //for polygon
+    // token: "MATIC",
   },
 };

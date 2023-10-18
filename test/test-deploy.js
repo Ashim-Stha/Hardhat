@@ -1,4 +1,4 @@
-const { assert } = require("chai");
+const { assert, expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("SimpleStorage", function () {
@@ -13,6 +13,7 @@ describe("SimpleStorage", function () {
     const expectedVal = "0";
 
     assert.equal(currentVal.toString(), expectedVal);
+    // expect(currentVal.toString()).to.equal(expectedVal);
   });
 
   it("Should update when we call store", async function () {
