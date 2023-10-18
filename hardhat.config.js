@@ -3,6 +3,7 @@ require("dotenv").config();
 require("@nomicfoundation/hardhat-verify");
 require("./tasks/blockNumber");
 require("hardhat-gas-reporter");
+require("solidity-coverage");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const surl = process.env.RPC_URL_ALCHEMY || "https://eth-sepolia";
